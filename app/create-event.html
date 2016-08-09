@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>studio design</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="styles/user.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header"><a class="navbar-brand navbar-link" href="#">Meatup</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            </div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active" role="presentation"><a href="#">Organize a Meatup</a></li>
+                    <li role="presentation"><a href="#">My Meatups</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <ul class="nav nav-pills nav-justified">
+        <li class="active"><a href="#">1. Describe Event <i class="fa fa-check-circle-o progress-complete"></i></a></li>
+        <li><a href="#">2. Invite Guests <i class="fa fa-times-circle-o progress-incomplete"></i></a></li>
+        <li><a href="#">3. Preview &amp; Send <i class="fa fa-times-circle-o progress-incomplete"></i></a></li>
+    </ul>
+    <section>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Please describe the event for your guests</h1></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <form>
+                    <div class="form-group">
+                        <label class="control-label" for="eventName">What is this event called?</label>
+                        <input class="form-control" type="text" name="eventName" required="" placeholder="Jamie Lynn's 3rd Annual ox-travaganza!" minlength="5" autofocus="" id="eventName">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="startDateTime">When does it start?</label>
+                        <input class="form-control" type="datetime-local" required="" id="startDateTime">
+												<label class="control-label" for="endDateTime">When does it end?</label>
+                        <input class="form-control" type="datetime-local" required="" id="endDateTime">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="endDateTime">When does it end?</label>
+                        <input class="form-control" type="datetime-local" required="" id="endDateTime">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="location">What is the location? </label>
+                        <input class="form-control" type="text" required="" placeholder="123 Main St, Anytown, TX" id="location"><i class="fa fa-map-marker fa-2x"></i><a href="#">Show on map</a></div>
+                    <div class="form-group">
+                        <label class="control-label" for="eventType">What will be on the trading block?</label>
+                        <input class="form-control" type="text" name="eventType" required="" id="eventType" list="eventTypes">
+                        <datalist id="eventTypes">
+    <option value="Large livestock" />
+    <option value="Small livestock" />
+    <option value="Fowl" />
+</datalist>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="host">Who is the host?</label>
+                        <input class="form-control" type="text" name="host" required="" autofocus="" id="host">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="message">A message for your guests:</label>
+                        <textarea class="form-control" name="message"></textarea>
+                    </div>
+                    <button class="btn btn-success btn-lg btn-create-event" type="submit">Next, invite guests</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script src="scripts/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
