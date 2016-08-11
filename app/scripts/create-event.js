@@ -65,4 +65,13 @@ function startBeforeEnd(startElem, endElem) {
 		});
 	});
 
+	// add all form data to localstorage after the form is submitted
+	form.addEventListener('submit', function(e) {
+		e.preventDefault();
+		allInputs.forEach(function(item) {
+			sessionStorage[item.id] = item.value;
+		});
+		window.location.assign(form.action);
+	});
+
 })();
