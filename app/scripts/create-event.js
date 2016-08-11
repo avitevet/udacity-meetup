@@ -55,5 +55,14 @@ function startBeforeEnd(startElem, endElem) {
 		startBeforeEnd(startDateInput, e.srcElement);
 	});
 
+	var form = document.querySelector('form');
+	var allInputs = form.querySelectorAll('input');
+	var progressbarDescribe = document.querySelector('.progressbar > li:first-child i');
+
+	allInputs.forEach(function(input) {
+		input.addEventListener('blur', function() {
+			progressbarDescribe.className = allValid(form) ? 'fa fa-check-circle-o progress-complete' : 'fa fa-times-circle-o progress-incomplete';
+		});
+	});
 
 })();
