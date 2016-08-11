@@ -219,10 +219,27 @@ section.testimonials{
   display:block;
 }
 
+#passwordRequirements{
+	list-style-type: none;
+	color: #DDDDDD;
+	padding: 0;
+	margin-top: 10px;
+}
+
 .progress-incomplete{
   color:red;
 }
 
 .progress-complete{
   color:#28b62c;
+}
+
+.validated {
+  input:required:invalid, input:focus:invalid {
+		border-left: 5px solid red;
+	}
+
+	input:required:valid, input:focus:valid {
+		border-left: 5px solid #28b62c;
+	}
 }

@@ -1,3 +1,17 @@
+/**
+	* Return true if all the input elements in the given form DOM object
+	* are valid, otherwise false.
+	*/
+function allValid(formElement) {
+	var valid = true;
+
+	formElement.querySelectorAll('input').forEach(function(item) {
+		valid &= item.checkValidity();
+	});
+
+	return valid;
+}
+
 /** store the login information in local storage, so it can be used by other
  * pages, then redirect to create-event.html
  */
@@ -16,7 +30,7 @@ function saveAuthentication(fullname, email) {
 
 	// username the string before the delimiter
 	var delimPos = str.indexOf(delimiter);
-	sessionStorage.username = str.slice(0, delimPos);
+	sessionStorage.username = (delimPos === -1) ? str : str.slice(0, delimPos);
 }
 
 (function() {
