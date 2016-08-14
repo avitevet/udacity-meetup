@@ -62,7 +62,8 @@ gulp.task('test', function() {
 	gulp.src('test/spec/**/*.js')
 	.pipe(jasmine({
 		integration: true,
-		vendor: 'scripts/**/*.js'
+		keepRunner: 'test/generated',
+		vendor: 'app/scripts/**/*.js'
 	}));
 });
 
