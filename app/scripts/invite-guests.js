@@ -1,20 +1,3 @@
-var inviteList = document.querySelector('#inviteList');
-
-function addToInviteList(entry) {
-	// create the new node, then add it to the inviteList
-	var nodeTxt = document.createTextNode(entry.text + ' ');
-	var icon = document.createElement('i');
-	icon.className = 'fa fa-user-times';
-
-	var li = document.createElement('li');
-	li.setAttribute('data-email', entry.email);
-	li.className = 'list-group-item';
-	li.appendChild(nodeTxt);
-	li.appendChild(icon);
-
-	inviteList.appendChild(li);
-}
-
 function isEmail(text) {
 	// from emailregex.com
 	return text.match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i);
@@ -72,22 +55,118 @@ function processEmails(txt) {
 	return [emails, invalidNonEmpty];
 }
 
+// pass the root element of the invite list.  The invite list includes the
+// heading and the list, so pass the element that contains all those elements.
+var InviteList = function(selector) {
+	var self = this;
+	this.rootEl = document.querySelector(selector);
+	this.listRootEl = this.rootEl.querySelector('#entries');
+	this.timesIcon = this.rootEl.querySelector('#times');
+	this.plusIcon = this.rootEl.querySelector('#plus');
+	this.noguests = this.rootEl.querySelector('#noguests');
+	this.entries = [];
+
+	this.timesIcon.addEventListener('click', function() {
+		self.hide();
+	});
+
+	this.plusIcon.addEventListener('click', function() {
+		self.show();
+	});
+};
+
+// show the list, including the "no guests" message if this.entries is empty.
+// also, change the icon to fa-times instead of fa-plus
+InviteList.prototype.show = function() {
+	this.listRootEl.className = 'list-group';
+	this.timesIcon.classList.toggle('hidden');
+	this.plusIcon.classList.toggle('hidden');
+	this.noguests.className = (this.entries.length === 0) ? 'list-group-item' : 'list-group-item hidden';
+};
+
+// hide the list.
+// also, change the icon to fa-times instead of fa-plus
+InviteList.prototype.hide = function() {
+	this.listRootEl.className = 'list-group hidden';
+	this.timesIcon.classList.toggle('hidden');
+	this.plusIcon.classList.toggle('hidden');
+};
+
+/**
+ 	* Adds the given entry to the list.  Entry should be an object with email and
+	* text properties.
+	*
+	* @return true if the element was added, false otherwise.  Can return false
+	*         when the email already exists in the list, even if the label/text doesn't.
+	*/
+InviteList.prototype.addEntry = function(entry) {
+	// if the entry is already in the list, don't add it
+	var contains = this.entries.some(function(e) {
+		console.log(e.email);
+		return (e.email === entry.email);
+	});
+	if (contains) {
+		return false;
+	}
+	this.entries.push(entry);
+
+	// create the new node, then add it to the inviteList
+	var self = this;
+	var nodeTxt = document.createTextNode(entry.text + ' ');
+	var icon = document.createElement('i');
+	icon.className = 'fa fa-user-times';
+	icon.addEventListener('click', function(e) {
+		self.removeEntry(e.srcElement);
+	});
+
+	var li = document.createElement('li');
+	li.setAttribute('data-email', entry.email);
+	li.className = 'list-group-item';
+	li.appendChild(nodeTxt);
+	li.appendChild(icon);
+
+	this.listRootEl.appendChild(li);
+
+	// hide the noguests message
+	this.noguests.className = 'list-group-item hidden';
+
+	return true;
+};
+
+/**
+ * @param clickedIcon  The Element that was clicked.  The email associated with
+ *                     the icon will be deleted
+ */
+InviteList.prototype.removeEntry = function(clickedIcon) {
+	var parent = clickedIcon.parentElement;
+	var grandparent = parent.parentElement;
+
+	var email = parent.getAttribute('data-email');
+	this.entries = this.entries.filter(function(e) {
+		e.email !== email;
+	});
+	grandparent.removeChild(parent);
+
+	if (this.entries.length === 0) {
+		this.noguests.display = '';
+	}
+};
+
 (function() {
 	// change red x to green circle in progressbar when at least 1 person has been added
 	var progressbarInvite = document.querySelector('.progressbar > li:nth-child(2) i');
 
 	var inviteTxt = document.querySelector('textarea');
+	var inviteList = new InviteList('#inviteList');
 
 	var inviteGuestsBtn = document.querySelector('.btn-invite-guests');
 	inviteGuestsBtn.addEventListener('click', function() {
 		var results = processEmails(inviteTxt.value);
 		results[0].forEach(function(entry) {
-			addToInviteList(entry);
+			inviteList.addEntry(entry);
 		});
 		inviteTxt.value = results[1].join(', ');
 	});
-
-
 
 //			progressbarInvite.className = allValid(form) ? 'fa fa-check-circle-o progress-complete' : 'fa fa-times-circle-o progress-incomplete';
 

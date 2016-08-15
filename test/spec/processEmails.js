@@ -46,6 +46,27 @@ describe('invite-guests', function () {
 			});
 		});
 
+		it('should parse mixed emails correctly', function() {
+			var text = 'blah <avi@avi.com> avi@avi2.com';
+			var results = processEmails(text);
+			expect(results[0]).toEqual([{email: 'avi@avi.com', text: 'blah'}, {email: 'avi@avi2.com', text: 'avi@avi2.com'}]);
+			expect(results[1]).toEqual([]);
+		});
+
+		it('should parse mixed emails correctly 2', function() {
+			var text = 'avi@avi2.com blah <avi@avi.com> ';
+			var results = processEmails(text);
+			expect(results[0]).toEqual([{email: 'avi@avi2.com', text: 'avi@avi2.com'}, {email: 'avi@avi.com', text: 'blah'}]);
+			expect(results[1]).toEqual([]);
+		});
+
+		it('should parse mixed emails correctly with invalid addresses', function() {
+			var text = 'bad avi@avi2.com blah <avi@avi.com> morebad';
+			var results = processEmails(text);
+			expect(results[0]).toEqual([{email: 'avi@avi2.com', text: 'avi@avi2.com'}, {email: 'avi@avi.com', text: 'blah'}]);
+			expect(results[1]).toEqual(['bad', 'morebad']);
+		});
+
 		it('should detect invalid email correctly', function () {
 			var email = 'avi';
 			var results = processEmails(email);
@@ -64,6 +85,7 @@ describe('invite-guests', function () {
 			expect(results[0]).toEqual([]);
 			expect(results[1]).toEqual([]);
 		});
+
 
 
 	});
