@@ -66,7 +66,10 @@ var InviteList = function(selector) {
 	this.noguests = this.rootEl.querySelector('#noguests');
 	this.guestAddedEvt = new Event('guest-added');
 	this.noGuestsEvt = new Event('no-guests');
-	this.entries = [];
+	this.entries = 	sessionStorage.invitedEntries ? JSON.parse(sessionStorage.invitedEntries) : [];
+	this.entries.forEach(function(entry) {
+		self.addEntry(entry, true);
+	});
 
 	this.timesIcon.addEventListener('click', function() {
 		self.hide();
@@ -102,15 +105,18 @@ InviteList.prototype.hide = function() {
 	* @return true if the element was added, false otherwise.  Can return false
 	*         when the email already exists in the list, even if the label/text doesn't.
 	*/
-InviteList.prototype.addEntry = function(entry) {
+InviteList.prototype.addEntry = function(entry, initial = false) {
 	// if the entry is already in the list, don't add it
 	var contains = this.entries.some(function(e) {
 		return (e.email === entry.email);
 	});
-	if (contains) {
+	if (contains && !initial) {
 		return false;
 	}
-	this.entries.push(entry);
+	if (!initial) {
+		this.entries.push(entry);
+		sessionStorage.invitedEntries = JSON.stringify(this.entries);
+	}
 
 	// create the new node, then add it to the inviteList
 	var self = this;
@@ -148,6 +154,7 @@ InviteList.prototype.removeEntry = function(clickedIcon) {
 	this.entries = this.entries.filter(function(e) {
 		e.email !== email;
 	});
+	sessionStorage.invitedEntries = JSON.stringify(this.entries);
 	grandparent.removeChild(parent);
 
 	if (this.entries.length === 0) {
@@ -168,11 +175,12 @@ InviteList.prototype.removeEntry = function(clickedIcon) {
 			inviteList.addEntry(entry);
 		});
 		inviteTxt.value = results[1].join(', ');
+		var invalidEmailsMsg = document.querySelector('#invalidEmails');
 		if (results[1].length > 0) {
-			document.querySelector('#invalidEmails').classList.remove('hidden');
+			invalidEmailsMsg.classList.remove('hidden');
 		}
 		else {
-			document.querySelector('#invalidEmails').classList.add('hidden');
+			invalidEmailsMsg.classList.add('hidden');
 		}
 	});
 
@@ -184,5 +192,4 @@ InviteList.prototype.removeEntry = function(clickedIcon) {
 	document.addEventListener('no-guests', function() {
 		progressbarInvite.className = 'fa fa-times-circle-o progress-incomplete';
 	});
-
 })();
