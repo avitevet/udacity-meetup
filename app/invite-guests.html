@@ -24,7 +24,7 @@
             </div>
         </div>
     </nav>
-    <ul class="nav nav-pills nav-justified">
+    <ul class="nav nav-pills nav-justified progressbar">
         <li><a href="#">1. Describe Event <i class="fa fa-check-circle-o progress-complete"></i></a></li>
         <li class="active"><a href="#">2. Invite Guests <i class="fa fa-times-circle-o progress-incomplete"></i></a></li>
         <li><a href="#">3. Preview and Send <i class="fa fa-times-circle-o progress-incomplete"></i></a></li>
@@ -40,6 +40,7 @@
                     <div class="form-group">
                         <label class="control-label">Just type in the email addresses of your guests below - we'll figure it out!</label>
                         <textarea class="form-control" required autofocus=""></textarea>
+												<p class="hidden progress-incomplete" id="invalidEmails">Uh oh!  These don't seem like real email addresses.  Can you please check if they're correct?</p>
                         <button class="btn btn-default btn-lg btn-invite-guests" type="button">Add these guests to the invitation list</button>
                     </div>
                 </form>

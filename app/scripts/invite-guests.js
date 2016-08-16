@@ -64,6 +64,8 @@ var InviteList = function(selector) {
 	this.timesIcon = this.rootEl.querySelector('#times');
 	this.plusIcon = this.rootEl.querySelector('#plus');
 	this.noguests = this.rootEl.querySelector('#noguests');
+	this.guestAddedEvt = new Event('guest-added');
+	this.noGuestsEvt = new Event('no-guests');
 	this.entries = [];
 
 	this.timesIcon.addEventListener('click', function() {
@@ -79,17 +81,18 @@ var InviteList = function(selector) {
 // also, change the icon to fa-times instead of fa-plus
 InviteList.prototype.show = function() {
 	this.listRootEl.className = 'list-group';
-	this.timesIcon.classList.toggle('hidden');
-	this.plusIcon.classList.toggle('hidden');
-	this.noguests.className = (this.entries.length === 0) ? 'list-group-item' : 'list-group-item hidden';
+	this.timesIcon.classList.remove('hidden');
+	this.plusIcon.classList.add('hidden');
+	var noguestsFunc = (this.entries.length === 0) ? this.noguests.classList.remove : this.noguests.classList.add;
+	noguestsFunc.call(this.noguests.classList, 'hidden');
 };
 
 // hide the list.
 // also, change the icon to fa-times instead of fa-plus
 InviteList.prototype.hide = function() {
-	this.listRootEl.className = 'list-group hidden';
-	this.timesIcon.classList.toggle('hidden');
-	this.plusIcon.classList.toggle('hidden');
+	this.listRootEl.classList.add('hidden');
+	this.timesIcon.classList.add('hidden');
+	this.plusIcon.classList.remove('hidden');
 };
 
 /**
@@ -102,7 +105,6 @@ InviteList.prototype.hide = function() {
 InviteList.prototype.addEntry = function(entry) {
 	// if the entry is already in the list, don't add it
 	var contains = this.entries.some(function(e) {
-		console.log(e.email);
 		return (e.email === entry.email);
 	});
 	if (contains) {
@@ -127,8 +129,9 @@ InviteList.prototype.addEntry = function(entry) {
 
 	this.listRootEl.appendChild(li);
 
-	// hide the noguests message
-	this.noguests.className = 'list-group-item hidden';
+	// hide the noguests message and raise the guestAddedEvent
+	this.noguests.classList.add('hidden');
+	document.dispatchEvent(this.guestAddedEvt);
 
 	return true;
 };
@@ -148,13 +151,12 @@ InviteList.prototype.removeEntry = function(clickedIcon) {
 	grandparent.removeChild(parent);
 
 	if (this.entries.length === 0) {
-		this.noguests.display = '';
+		this.noguests.classList.remove('hidden');
+		document.dispatchEvent(this.noGuestsEvt);
 	}
 };
 
 (function() {
-	// change red x to green circle in progressbar when at least 1 person has been added
-	var progressbarInvite = document.querySelector('.progressbar > li:nth-child(2) i');
 
 	var inviteTxt = document.querySelector('textarea');
 	var inviteList = new InviteList('#inviteList');
@@ -166,8 +168,21 @@ InviteList.prototype.removeEntry = function(clickedIcon) {
 			inviteList.addEntry(entry);
 		});
 		inviteTxt.value = results[1].join(', ');
+		if (results[1].length > 0) {
+			document.querySelector('#invalidEmails').classList.remove('hidden');
+		}
+		else {
+			document.querySelector('#invalidEmails').classList.add('hidden');
+		}
 	});
 
-//			progressbarInvite.className = allValid(form) ? 'fa fa-check-circle-o progress-complete' : 'fa fa-times-circle-o progress-incomplete';
+	// change red x to green circle in progressbar when at least 1 person has been added
+	var progressbarInvite = document.querySelector('.progressbar > li:nth-child(2) i');
+	document.addEventListener('guest-added', function() {
+		progressbarInvite.className = 'fa fa-check-circle-o progress-complete';
+	});
+	document.addEventListener('no-guests', function() {
+		progressbarInvite.className = 'fa fa-times-circle-o progress-incomplete';
+	});
 
 })();
