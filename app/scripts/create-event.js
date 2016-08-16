@@ -56,13 +56,14 @@ function startBeforeEnd(startElem, endElem) {
 	});
 
 	var form = document.querySelector('form');
-	var allInputs = form.querySelectorAll('input');
+	var allInputs = form.querySelectorAll('input, textarea');
 	var progressbarDescribe = document.querySelector('.progressbar > li:first-child i');
 
 	allInputs.forEach(function(input) {
 		input.addEventListener('blur', function() {
 			progressbarDescribe.className = allValid(form) ? 'fa fa-check-circle-o progress-complete' : 'fa fa-times-circle-o progress-incomplete';
 		});
+		input.value = sessionStorage[input.id] || '';
 	});
 
 	// add all form data to localstorage after the form is submitted
