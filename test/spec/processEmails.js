@@ -12,6 +12,12 @@ describe('invite-guests', function () {
 			expect(results[0]).toEqual([{email: 'avi@avitevet.com', text: 'blah'}]);
 			expect(results[1]).toEqual([]);
 		});
+		it('should parse double quoted copied email correctly', function () {
+			var email = '"blah 2" <avi@avitevet.com>';
+			var results = processEmails(email);
+			expect(results[0]).toEqual([{email: 'avi@avitevet.com', text: 'blah 2'}]);
+			expect(results[1]).toEqual([]);
+		});
 		it('should parse 2 emails correctly', function () {
 			var separators = [',', ';', ' ', '\n'];
 			var emails = ['avi@avitevet.com', 'person@example.org'];
