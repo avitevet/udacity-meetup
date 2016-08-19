@@ -29,48 +29,60 @@
             <div class="col-md-12">
                 <h1 class="text-center">My Meatups</h1></div>
         </div>
-    </section>
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Meatup <i class="fa fa-unsorted"></i></th>
-                    <th>Date <i class="fa fa-sort-desc"></i></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Jamie Lynn's 3rd annual ox-travaganza
-                        <div><span class="label label-success"><i class="fa fa-thumbs-up"></i> Yes: 15</span><span class="label label-warning"> <i class="fa fa-question-circle"></i> Maybe: 3</span><span class="label label-default"> <i class="fa fa-question-circle"></i> No Response: 8</span>
-                            <span
-                            class="label label-danger"><i class="fa fa-thumbs-down"></i> No: 2</span>
-                        </div>
-                    </td>
-                    <td>today </td>
-                </tr>
-                <tr>
-                    <td>A Fowl Occasion
-                        <div><span class="label label-success"><i class="fa fa-thumbs-up"></i> Yes: 4</span><span class="label label-warning"> <i class="fa fa-question-circle"></i> Maybe: 0</span><span class="label label-default"> <i class="fa fa-question-circle"></i> No Response: 21</span>
-                            <span
-                            class="label label-danger"><i class="fa fa-thumbs-down"></i> No: 134</span>
-                        </div>
-                    </td>
-                    <td>tomorrow </td>
-                </tr>
-                <tr>
-                    <td>Moo-ving out sale
-                        <div><span class="label label-success"><i class="fa fa-thumbs-up"></i> Yes: 15</span><span class="label label-warning"> <i class="fa fa-question-circle"></i> Maybe: 3</span><span class="label label-default"> <i class="fa fa-question-circle"></i> No Response: 8</span>
-                            <span
-                            class="label label-danger"><i class="fa fa-thumbs-down"></i> No: 2</span>
-                        </div>
-                    </td>
-                    <td>Sept. 18</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+				<div class="row">
+					<div class="col-sm-6 col-sm-offset-3 table-responsive">
+	        <table class="table">
+	            <thead>
+	                <tr>
+	                    <th>Meatup <i class="fa fa-unsorted"></i></th>
+	                    <th>Date <i class="fa fa-sort-desc"></i></th>
+	                </tr>
+	            </thead>
+	            <tbody>
+								<tr>
+										<td><span id="eventName"></span>
+												<div><span class="label label-success"><i class="fa fa-thumbs-up"></i> Yes: 0</span><span class="label label-warning"> <i class="fa fa-question-circle"></i> Maybe: 0</span><span class="label label-default"> <i class="fa fa-question-circle"></i> No Response: <span id="numNoResponse"></span></span>
+														<span	class="label label-danger"><i class="fa fa-thumbs-down"></i> No: 0</span>
+												</div>
+										</td>
+										<td><span id="eventStartDate"></span></td>
+								</tr>
+	                <tr>
+	                    <td>Jamie Lynn's 3rd annual ox-travaganza
+	                        <div><span class="label label-success"><i class="fa fa-thumbs-up"></i> Yes: 15</span><span class="label label-warning"> <i class="fa fa-question-circle"></i> Maybe: 3</span><span class="label label-default"> <i class="fa fa-question-circle"></i> No Response: 8</span>
+	                            <span
+	                            class="label label-danger"><i class="fa fa-thumbs-down"></i> No: 2</span>
+	                        </div>
+	                    </td>
+	                    <td>today </td>
+	                </tr>
+	                <tr>
+	                    <td>A Fowl Occasion
+	                        <div><span class="label label-success"><i class="fa fa-thumbs-up"></i> Yes: 4</span><span class="label label-warning"> <i class="fa fa-question-circle"></i> Maybe: 0</span><span class="label label-default"> <i class="fa fa-question-circle"></i> No Response: 21</span>
+	                            <span
+	                            class="label label-danger"><i class="fa fa-thumbs-down"></i> No: 134</span>
+	                        </div>
+	                    </td>
+	                    <td>tomorrow </td>
+	                </tr>
+	                <tr>
+	                    <td>Moo-ving out sale
+	                        <div><span class="label label-success"><i class="fa fa-thumbs-up"></i> Yes: 15</span><span class="label label-warning"> <i class="fa fa-question-circle"></i> Maybe: 3</span><span class="label label-default"> <i class="fa fa-question-circle"></i> No Response: 8</span>
+	                            <span
+	                            class="label label-danger"><i class="fa fa-thumbs-down"></i> No: 2</span>
+	                        </div>
+	                    </td>
+	                    <td>Sept. 18</td>
+	                </tr>
+	            </tbody>
+	        </table>
+				</div>
+	    </div>
+		</section>
     <script src="scripts/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+		<script src="scripts/my-events.js"></script>
 </body>
 
 </html>
