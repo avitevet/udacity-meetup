@@ -62,7 +62,7 @@ gulp.task('test', function() {
 	gulp.src('test/spec/**/*.js')
 	.pipe(jasmine({
 		integration: true,
-//		keepRunner: 'test/generated',
+		keepRunner: 'test/generated',
 		includeStackTrace: true,
 		jasmineVersion: '2.4',
 		vendor: ['app/scripts/processEmails.js', 'app/scripts/invitelist.js']
