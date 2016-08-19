@@ -111,7 +111,7 @@ InviteList.prototype.removeEntry = function(clickedIcon) {
 
 	var email = parent.getAttribute('data-email');
 	this.entries = this.entries.filter(function(e) {
-		e.email !== email;
+		return e.email !== email;
 	});
 	sessionStorage.invitedEntries = JSON.stringify(this.entries);
 	grandparent.removeChild(parent);
