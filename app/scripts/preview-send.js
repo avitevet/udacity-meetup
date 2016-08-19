@@ -22,4 +22,8 @@
 		endPart = endDateTime.format('dddd MMM D, YYYY, h:mmA');
 	}
 	document.querySelector('#eventDates').innerHTML = startPart + ' - ' + endPart;
+
+	document.querySelector('#btnSend').addEventListener('click', function() {
+		window.location.assign('my-events.html');
+	});
 })();
