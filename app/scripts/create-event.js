@@ -38,9 +38,6 @@ function startBeforeEnd(startElem, endElem) {
 
 
 (function() {
-	var host = document.getElementById('host');
-	host.value = typeof(sessionStorage.username) === 'undefined' ? '' : sessionStorage.username;
-
 	// custom validation of the start & end dates
 	var startDateInput = document.getElementById('startDateTime');
 	var endDateInput = document.getElementById('endDateTime');
@@ -65,6 +62,9 @@ function startBeforeEnd(startElem, endElem) {
 		});
 		input.value = sessionStorage[input.id] || '';
 	});
+	// provide a default for the host
+	var host = document.getElementById('host');
+	host.value = host.value || (typeof(sessionStorage.username) === 'undefined' ? '' : sessionStorage.username);
 
 	// add all form data to localstorage after the form is submitted
 	form.addEventListener('submit', function(e) {
