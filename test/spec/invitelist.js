@@ -1,3 +1,5 @@
+/* global InviteList */
+
 describe('InviteList', function() {
 
 	beforeEach(function() {
@@ -73,7 +75,7 @@ describe('InviteList', function() {
 
 		entries.forEach(function(entry) {
 			inviteList.addEntry(entry);
-		})
+		});
 
 		inviteList.removeEntry(dom.querySelector('#entries i'));
 		expect(eventRaised).toEqual(false);
@@ -87,7 +89,7 @@ describe('InviteList', function() {
 		var entry = {email: 'avi@avi.com', text:'Avi'};
 
 		inviteList.addEntry(entry);
-		inviteList.removeEntry(dom.querySelector('#entries i'))
+		inviteList.removeEntry(dom.querySelector('#entries i'));
 
 		var entries = dom.querySelector('#entries');
 		expect(entries.querySelector('#noguests').classList.contains('hidden')).toEqual(false);
