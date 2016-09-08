@@ -82,11 +82,11 @@ CreateEventForm.prototype.initAddressAutocomplete = function() {
 	autocomplete.addListener('place_changed', function() {
 		var place = autocomplete.getPlace();
 		if (place.formatted_address) {
-			self.showOnMapEl.className = '';
+			self.showOnMapEl.classList.remove('invisible');
 			self.showOnMapEl.firstChild.href = place.url;
 		}
 		else {
-			self.showOnMapEl.classname = 'invisible';
+			self.showOnMapEl.classList.add('invisible');
 		}
 	});
 };
