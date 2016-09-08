@@ -1,20 +1,22 @@
+/* global InviteGuests */
+
 describe('invite-guests', function () {
 	describe('email parsing', function() {
 		it('should parse single email correctly', function () {
 			var email = 'avi@avitevet.com';
-			var results = processEmails(email);
+			var results = InviteGuests.prototype.processEmails.call(InviteGuests.prototype, email);
 			expect(results[0]).toEqual([{email: email, text: email}]);
 			expect(results[1]).toEqual([]);
 		});
 		it('should parse single copied email correctly', function () {
 			var email = 'blah <avi@avitevet.com>';
-			var results = processEmails(email);
+			var results = InviteGuests.prototype.processEmails.call(InviteGuests.prototype, email);
 			expect(results[0]).toEqual([{email: 'avi@avitevet.com', text: 'blah'}]);
 			expect(results[1]).toEqual([]);
 		});
 		it('should parse double quoted copied email correctly', function () {
 			var email = '"blah 2" <avi@avitevet.com>';
-			var results = processEmails(email);
+			var results = InviteGuests.prototype.processEmails.call(InviteGuests.prototype, email);
 			expect(results[0]).toEqual([{email: 'avi@avitevet.com', text: 'blah 2'}]);
 			expect(results[1]).toEqual([]);
 		});
@@ -24,7 +26,7 @@ describe('invite-guests', function () {
 			separators.forEach(function(sep) {
 				['', ' '].forEach(function(ws) {
 					var text = emails.join(sep + ws);
-					var results = processEmails(text);
+					var results = InviteGuests.prototype.processEmails.call(InviteGuests.prototype, text);
 					var expected = [];
 					emails.forEach(function(email) {
 						expected.push({email: email, text: email});
@@ -40,7 +42,7 @@ describe('invite-guests', function () {
 			separators.forEach(function(sep) {
 				['', ' '].forEach(function(ws) {
 					var text = emails.join(sep + ws);
-					var results = processEmails(text);
+					var results = InviteGuests.prototype.processEmails.call(InviteGuests.prototype, text);
 					var expected = [];
 					emails.forEach(function(email) {
 						var tokens = email.split(/ \<|\>/);
@@ -54,40 +56,40 @@ describe('invite-guests', function () {
 
 		it('should parse mixed emails correctly', function() {
 			var text = 'blah <avi@avi.com> avi@avi2.com';
-			var results = processEmails(text);
+			var results = InviteGuests.prototype.processEmails.call(InviteGuests.prototype, text);
 			expect(results[0]).toEqual([{email: 'avi@avi.com', text: 'blah'}, {email: 'avi@avi2.com', text: 'avi@avi2.com'}]);
 			expect(results[1]).toEqual([]);
 		});
 
 		it('should parse mixed emails correctly 2', function() {
 			var text = 'avi@avi2.com blah <avi@avi.com> ';
-			var results = processEmails(text);
+			var results = InviteGuests.prototype.processEmails.call(InviteGuests.prototype, text);
 			expect(results[0]).toEqual([{email: 'avi@avi2.com', text: 'avi@avi2.com'}, {email: 'avi@avi.com', text: 'blah'}]);
 			expect(results[1]).toEqual([]);
 		});
 
 		it('should parse mixed emails correctly with invalid addresses', function() {
 			var text = 'bad avi@avi2.com blah <avi@avi.com> morebad';
-			var results = processEmails(text);
+			var results = InviteGuests.prototype.processEmails.call(InviteGuests.prototype, text);
 			expect(results[0]).toEqual([{email: 'avi@avi2.com', text: 'avi@avi2.com'}, {email: 'avi@avi.com', text: 'blah'}]);
 			expect(results[1]).toEqual(['bad', 'morebad']);
 		});
 
 		it('should detect invalid email correctly', function () {
 			var email = 'avi';
-			var results = processEmails(email);
+			var results = InviteGuests.prototype.processEmails.call(InviteGuests.prototype, email);
 			expect(results[0]).toEqual([]);
 			expect(results[1]).toEqual([email]);
 		});
 		it('should detect 2 invalid emails correctly', function () {
 			var email = 'avi@ stuff.com';
-			var results = processEmails(email);
+			var results = InviteGuests.prototype.processEmails.call(InviteGuests.prototype, email);
 			expect(results[0]).toEqual([]);
 			expect(results[1]).toEqual(['avi@', 'stuff.com']);
 		});
 		it('should handle empty strings gracefully 1', function () {
 			var email = ',,,';
-			var results = processEmails(email);
+			var results = InviteGuests.prototype.processEmails.call(InviteGuests.prototype, email);
 			expect(results[0]).toEqual([]);
 			expect(results[1]).toEqual([]);
 		});
