@@ -1,11 +1,15 @@
-(function() {
-	var inviteList = new InviteList('#inviteList', InviteListMode.RO);
+/* global InviteList, InviteListMode, moment */
+
+var PreviewSend = function(root) {
+	var self = this;
+	this.rootEl = typeof(root) === 'string' ? document.querySelector(root) : root;
+	this.inviteList = new InviteList('#inviteList', InviteListMode.RO);
 
 	['eventType', 'eventName', 'host', 'location'].forEach(function(id) {
-		document.querySelector('#' + id).innerHTML = sessionStorage[id];
+		self.rootEl.querySelector('#' + id).innerHTML = sessionStorage[id];
 	});
 
-	document.querySelector('#message').innerHTML = sessionStorage['message'].replace(/\n/g, '<br>');
+	this.rootEl.querySelector('#message').innerHTML = sessionStorage['message'].replace(/\n/g, '<br>');
 
 	// format the dates
 	var startDateTime = moment(sessionStorage.startDateTime),
@@ -21,9 +25,18 @@
 	if (!startDateTime.isSame(endDateTime, 'day')) {
 		endPart = endDateTime.format('dddd MMM D, YYYY, h:mmA');
 	}
-	document.querySelector('#eventDates').innerHTML = startPart + ' - ' + endPart;
+	this.rootEl.querySelector('#eventDates').innerHTML = startPart + ' - ' + endPart;
 
-	document.querySelector('#btnSend').addEventListener('click', function() {
+	this.rootEl.querySelector('#btnSend').addEventListener('click', function() {
 		window.location.assign('my-events.html');
 	});
+};
+
+
+
+(function() {
+	var previewSendRoot = document.querySelector('#previewsend');
+	if (previewSendRoot) {
+		new PreviewSend(previewSendRoot);
+	}
 })();
