@@ -94,6 +94,6 @@ CreateEventForm.prototype.initAddressAutocomplete = function() {
 (function() {
 	var createEventForm = document.querySelector('.create-event');
 	if (createEventForm) {
-		var createEvent = new CreateEventForm(createEventForm);
+		new CreateEventForm(createEventForm);
 	}
 })();

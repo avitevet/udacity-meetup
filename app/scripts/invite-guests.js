@@ -87,7 +87,7 @@ InviteGuests.prototype.processEmails = function(txt) {
 (function() {
 	var inviteGuestsRoot = document.querySelector('#inviteGuests');
 	if (inviteGuestsRoot) {
-		var inviteGuests = new InviteGuests(inviteGuestsRoot);
+		new InviteGuests(inviteGuestsRoot);
 	}
 
 	// change red x to green circle in progressbar when at least 1 person has been added

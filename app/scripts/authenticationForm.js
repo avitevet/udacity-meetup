@@ -92,5 +92,7 @@ AuthenticationForm.prototype.reqNumber = function(pw) {
 
 (function() {
 	var authFormRoot = document.querySelector('.authentication');
-	var authForm = authFormRoot ? new AuthenticationForm(authFormRoot) : undefined;
+	if (authFormRoot) {
+		new AuthenticationForm(authFormRoot);
+	}
 })();
