@@ -69,7 +69,7 @@ gulp.task('scripts', () => {
 });
 
 gulp.task('scripts:dist', () => {
-	return scripts(scriptfiles, false, 'app.min.js', '.tmp/scripts');
+	return scripts(scriptfiles, false, 'app.min.js', 'dist/scripts');
 });
 
 
@@ -170,12 +170,12 @@ gulp.task('serve', ['styles', 'scripts', 'fonts', 'test'], () => {
 	gulp.watch('bower.json', ['wiredep', 'fonts']);
 });
 
-gulp.task('serve:dist', () => {
+gulp.task('serve:dist', ['scripts:dist'], () => {
 	browserSync({
 		notify: false,
 		port: 9000,
 		server: {
-			baseDir: ['dist'],
+			baseDir: ['dist', 'app'],
 			index: 'signin.html'
 		}
 	});
