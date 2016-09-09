@@ -17,7 +17,7 @@ var CreateEventForm = function(root) {
 	// possibly provide a default for the end date
 	this.startDateInputEl.addEventListener('blur', function() {
 		if (self.startLaterThanNow() && (self.endDateInputEl.value === '')) {
-			self.endDateInputEl.value = moment(self.startDateInputEl.value).add(8, 'hours').format('YYYY-MM-DDTHH:mm');
+			self.endDateInputEl.value = moment(self.startDateInputEl.value).add(8, 'hours').format('yyyy-MM-ddThh:mm');
 		}
 	});
 	// when the user leaves the end date field, check that the start date/time
