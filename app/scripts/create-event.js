@@ -1,7 +1,7 @@
 /* global moment, allValid, google */
 
 var CreateEventForm = function(root) {
-	var self = this;
+	var me = this;
 
 	this.formEl = root.tagName === 'FORM' ? root : root.querySelector('form');
 	this.hostEl = this.formEl.querySelector('#host');
@@ -16,21 +16,21 @@ var CreateEventForm = function(root) {
 	// the start date field, check that it's later than now, and
 	// possibly provide a default for the end date
 	this.startDateInputEl.addEventListener('blur', function() {
-		if (self.startLaterThanNow() && (self.endDateInputEl.value === '')) {
-			self.endDateInputEl.value = moment(self.startDateInputEl.value).add(8, 'hours').format('YYYY-MM-DDTHH:mm');
+		if (me.startDateInputEl.value && me.startLaterThanNow() && (me.endDateInputEl.value === '')) {
+			me.endDateInputEl.value = moment(me.startDateInputEl.value).add(8, 'hours').format('YYYY-MM-DDTHH:mm');
 		}
 	});
 	// when the user leaves the end date field, check that the start date/time
 	// is before the end date/time
 	this.endDateInputEl.addEventListener('blur', function() {
-		self.startBeforeEnd();
+		me.startBeforeEnd();
 	});
 
 	// update the progress bar when all the inputs are valid.  Check every
 	// time a field is blurred, and when the form is instantiated
 	this.allInputEls.forEach(function(input) {
 		input.addEventListener('blur', function() {
-			self.updateFormValid();
+			me.updateFormValid();
 		});
 		input.value = sessionStorage[input.id] || '';
 	});
@@ -42,10 +42,10 @@ var CreateEventForm = function(root) {
 	// add all form data to localstorage after the form is submitted
 	this.formEl.addEventListener('submit', function(e) {
 		e.preventDefault();
-		self.allInputEls.forEach(function(item) {
+		me.allInputEls.forEach(function(item) {
 			sessionStorage[item.id] = item.value;
 		});
-		window.location.assign(self.formEl.action);
+		window.location.assign(me.formEl.action);
 	});
 
 	this.initAddressAutocomplete();
@@ -76,17 +76,17 @@ CreateEventForm.prototype.updateFormValid = function() {
 };
 
 CreateEventForm.prototype.initAddressAutocomplete = function() {
-	var self = this,
+	var me = this,
 		autocomplete = new google.maps.places.Autocomplete(this.locationEl, {});
 
 	autocomplete.addListener('place_changed', function() {
 		var place = autocomplete.getPlace();
 		if (place.formatted_address) {
-			self.showOnMapEl.classList.remove('invisible');
-			self.showOnMapEl.firstChild.href = place.url;
+			me.showOnMapEl.classList.remove('invisible');
+			me.showOnMapEl.firstChild.href = place.url;
 		}
 		else {
-			self.showOnMapEl.classList.add('invisible');
+			me.showOnMapEl.classList.add('invisible');
 		}
 	});
 };

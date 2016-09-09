@@ -1,12 +1,12 @@
 /* global InviteList, InviteListMode, moment */
 
 var PreviewSend = function(root) {
-	var self = this;
+	var me = this;
 	this.rootEl = typeof(root) === 'string' ? document.querySelector(root) : root;
 	this.inviteList = new InviteList('#inviteList', InviteListMode.RO);
 
 	['eventType', 'eventName', 'host', 'location'].forEach(function(id) {
-		self.rootEl.querySelector('#' + id).innerHTML = sessionStorage[id];
+		me.rootEl.querySelector('#' + id).innerHTML = sessionStorage[id];
 	});
 
 	this.rootEl.querySelector('#message').innerHTML = sessionStorage['message'].replace(/\n/g, '<br>');

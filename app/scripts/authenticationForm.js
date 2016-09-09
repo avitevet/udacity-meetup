@@ -6,7 +6,7 @@
  *  fullname and/or email, and a submit button
  */
 var AuthenticationForm = function(root) {
-	var self = this;
+	var me = this;
 
 	this.fullnameEl = root.querySelector('#fullname');
 	this.emailEl = root.querySelector('#email');
@@ -21,12 +21,12 @@ var AuthenticationForm = function(root) {
 
 	var conditions = ['reqLength', 'reqLcChars', 'reqUcChars', 'reqNumber'];
 	this.passwordEl.addEventListener('input', function() {
-		var pw = self.passwordEl.value;
+		var pw = me.passwordEl.value;
 		var allValid = true;
 		conditions.forEach(function(conditionName) {
 			var conditionIcon = root.querySelector('#' + conditionName + ' > i');
 			if (conditionIcon) {
-				if (self[conditionName](pw)) {
+				if (me[conditionName](pw)) {
 					// change the icon to fa fa-check-circle-o progress-complete
 					conditionIcon.className = 'fa fa-check-circle-o progress-complete';
 				}
@@ -38,13 +38,13 @@ var AuthenticationForm = function(root) {
 				}
 			}
 		});
-		self.passwordEl.setCustomValidity(allValid ? '' : 'Please choose a password that satisfies all the criteria');
+		me.passwordEl.setCustomValidity(allValid ? '' : 'Please choose a password that satisfies all the criteria');
 	});
 
 
 	root.addEventListener('submit', function(e) {
 		e.preventDefault();
-		self.saveAuthentication();
+		me.saveAuthentication();
 		window.location.assign('create-event.html');
 	});
 };

@@ -11,7 +11,7 @@ var InviteList = function(selector, mode) {
 		mode = InviteListMode.RW;
 	}
 
-	var self = this;
+	var me = this;
 	this.rootEl = typeof(selector) === 'string' ? document.querySelector(selector) : selector;
 	this.mode = mode;
 	this.listRootEl = this.rootEl.querySelector('#entries');
@@ -22,15 +22,15 @@ var InviteList = function(selector, mode) {
 	this.noGuestsEvt = new Event('no-guests');
 	this.entries = 	sessionStorage.invitedEntries ? JSON.parse(sessionStorage.invitedEntries) : [];
 	this.entries.forEach(function(entry) {
-		self.addEntry(entry, true);
+		me.addEntry(entry, true);
 	});
 
 	this.timesIcon.addEventListener('click', function() {
-		self.hide();
+		me.hide();
 	});
 
 	this.plusIcon.addEventListener('click', function() {
-		self.show();
+		me.show();
 	});
 };
 
@@ -76,12 +76,12 @@ InviteList.prototype.addEntry = function(entry, initial) {
 	}
 
 	// create the new node, then add it to the inviteList
-	var self = this;
+	var me = this;
 	var nodeTxt = document.createTextNode(entry.text + ' ');
 	var icon = document.createElement('i');
 	icon.className = 'fa fa-user-times';
 	icon.addEventListener('click', function(e) {
-		self.removeEntry(e.srcElement);
+		me.removeEntry(e.srcElement);
 	});
 
 	var li = document.createElement('li');

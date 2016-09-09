@@ -4,19 +4,19 @@
  * Manages the invitation of guests - adds to the list, handles removing them from the list
  */
 var InviteGuests = function(root) {
-	var self = this;
+	var me = this;
 	this.rootEl = typeof(root) === 'string' ? document.querySelector(root) : root;
 	this.inviteGuestsBtn = this.rootEl.querySelector('.btn-invite-guests');
 	this.inviteTxt = this.rootEl.querySelector('textarea');
 	this.inviteList = new InviteList('#inviteList');
 
 	this.inviteGuestsBtn.addEventListener('click', function() {
-		var results = self.processEmails(self.inviteTxt.value);
+		var results = me.processEmails(me.inviteTxt.value);
 		results[0].forEach(function(entry) {
-			self.inviteList.addEntry(entry);
+			me.inviteList.addEntry(entry);
 		});
-		self.inviteTxt.value = results[1].join(', ');
-		var invalidEmailsMsg = self.rootEl.querySelector('#invalidEmails');
+		me.inviteTxt.value = results[1].join(', ');
+		var invalidEmailsMsg = me.rootEl.querySelector('#invalidEmails');
 		if (results[1].length > 0) {
 			invalidEmailsMsg.classList.remove('hidden');
 		}
