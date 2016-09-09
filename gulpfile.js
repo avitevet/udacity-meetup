@@ -16,9 +16,9 @@ gulp.task('styles', () => {
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.sass.sync({
-			outputStyle: 'expanded',
-			precision: 10,
-			includePaths: ['.']
+	outputStyle: 'expanded',
+	precision: 10,
+	includePaths: ['.']
     }).on('error', $.sass.logError))
     .pipe($.autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}))
     .pipe($.sourcemaps.write())
@@ -27,50 +27,31 @@ gulp.task('styles', () => {
 });
 
 /**
- * Concat, babel, and uglify the given source files in the project.
+ * Concat, babel, and uglify the given JS files in the project.
  * Store them in the given dest directory in a file named filename.
  * smap indicates whether the files should have source maps or not -
  * in production mode, the files should not have sourcemaps, otherwise they should.
- *
- * @param src  gulp.src argument
- * @param smap  Set to true to include sourcemaps, false otherwise
- * @param filename  Name of the concatenated/babeled/uglified file
- * @param dest  Directory where concatenated/babeled/uglified file is stored
- *
- * @return object suitable for returning in a gulp task
  */
-function scripts(src, smap, filename, dest) {
-	var s = gulp.src(src)
-    .pipe($.plumber());
-
-	if (smap) {
-		s = s.pipe($.sourcemaps.init());
-	}
-	s = s.pipe($.concat(filename))
-    .pipe($.babel())
-		.pipe($.uglify());
-	if (smap) {
-		s = s.pipe($.sourcemaps.write('.'));
-	}
-
-	return s.pipe(gulp.dest(dest))
-    .pipe(reload({stream: true}));
-}
-
-var scriptnames = ['main.js', 'invitelist.js', 'authenticationForm.js', 'create-event.js',
-	'invite-guests.js', 'my-events.js', 'preview-send.js'];
-var scriptfiles = [];
-scriptnames.forEach(function(name) {
-	scriptfiles.push('app/scripts/' + name);
-});
-
 gulp.task('scripts', () => {
-	return scripts(scriptfiles, true, 'app.min.js', '.tmp/scripts');
+	var scriptnames = ['main.js', 'invitelist.js', 'authenticationForm.js', 'create-event.js',
+		'invite-guests.js', 'my-events.js', 'preview-send.js'];
+	var scriptfiles = [];
+	scriptnames.forEach(function(name) {
+		scriptfiles.push('app/scripts/' + name);
+	});
+
+	return gulp.src(scriptfiles)
+    .pipe($.plumber())
+		.pipe($.sourcemaps.init())
+		.pipe($.concat('app.min.js'))
+    .pipe($.babel())
+		.pipe($.uglify())
+		.pipe($.sourcemaps.write('.'))
+		.pipe(gulp.dest('.tmp/scripts'))
+		.pipe(gulp.dest('dist/scripts'))
+    .pipe(reload({stream: true}));
 });
 
-gulp.task('scripts:dist', () => {
-	return scripts(scriptfiles, false, 'app.min.js', 'dist/scripts');
-});
 
 
 function lint(files, options) {
@@ -111,7 +92,7 @@ gulp.task('test', function() {
 gulp.task('html', ['styles', 'scripts'], () => {
 	return gulp.src('app/*.html')
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
-    .pipe($.if('*.js', $.uglify()))
+    /*.pipe($.if('*.js', $.uglify())) // JS is already uglified */
     .pipe($.if('*.css', $.cssnano({safe: true, autoprefixer: false})))
     .pipe($.if('*.html', $.htmlmin({collapseWhitespace: true})))
     .pipe(gulp.dest('dist'));
@@ -170,12 +151,17 @@ gulp.task('serve', ['styles', 'scripts', 'fonts', 'test'], () => {
 	gulp.watch('bower.json', ['wiredep', 'fonts']);
 });
 
-gulp.task('serve:dist', ['scripts:dist'], () => {
+gulp.task('assets:dist', () => {
+	return gulp.src('app/assets/**')
+		.pipe(gulp.dest('dist/assets'));
+});
+
+gulp.task('serve:dist', ['html', 'fonts', 'images', 'assets:dist' /*, 'test' */], () => {
 	browserSync({
 		notify: false,
 		port: 9000,
 		server: {
-			baseDir: ['dist', 'app'],
+			baseDir: ['dist'],
 			index: 'signin.html'
 		}
 	});
@@ -203,14 +189,14 @@ gulp.task('serve:test', ['scripts'], () => {
 gulp.task('wiredep', () => {
 	gulp.src('app/styles/*.scss')
     .pipe(wiredep({
-			ignorePath: /^(\.\.\/)+/
+	ignorePath: /^(\.\.\/)+/
     }))
     .pipe(gulp.dest('app/styles'));
 
 	gulp.src('app/*.html')
     .pipe(wiredep({
-			exclude: ['bootstrap-sass'],
-			ignorePath: /^(\.\.\/)*\.\./
+	exclude: ['bootstrap-sass'],
+	ignorePath: /^(\.\.\/)*\.\./
     }))
     .pipe(gulp.dest('app'));
 });
