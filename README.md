@@ -56,3 +56,8 @@ a password from any secure service.
 ## Event creation
 
 Please follow the (hopefully) clear workflow to create an event.
+
+## Inviting guests
+
+The application supports bulk email import, which allows users to (for example)
+copy and paste a cc list from an email.
