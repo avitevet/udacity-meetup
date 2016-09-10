@@ -23,7 +23,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                    <form method="get" action="create-event.html" class="authentication">
+                    <form method="get" action="create-event.html" class="authentication validated">
                         <div class="form-group">
                             <label class="control-label signin-label" for="fullname" id="fullname-label">What is your full name? </label>
                             <input class="form-control" type="text" name="fullname" placeholder="John Doe" id="fullname" required autofocus>
@@ -36,12 +36,17 @@
                             <label class="control-label signin-label" for="password" id="password-label">Choose a password:</label>
                             <input class="form-control" type="password" name="password" id="password" required>
 														<ul id="passwordRequirements">
-															<li id="reqLength"><i class="fa fa-times-circle-o progress-incomplete"></i> Must be 15 or more characters long</li>
+															<li id="reqLength"><i class="fa fa-times-circle-o progress-incomplete"></i> Must be 8 or more characters long</li>
 															<li id="reqLcChars"><i class="fa fa-times-circle-o progress-incomplete"></i> Must contain at least 1 lower case character</li>
 															<li id="reqUcChars"><i class="fa fa-times-circle-o progress-incomplete"></i> Must contain at least 1 upper case character</li>
 															<li id="reqNumber"><i class="fa fa-times-circle-o progress-incomplete"></i> Must contain at least 1 number</li>
 														</ul>
-                        </div><input class="btn btn-success btn-lg" role="button" id="signin-button" type="submit" value="JOIN FOR FREE"/><span id="join-phrase"> or, <a href="signin.html">sign in</a> if your're already a member!</span></form>
+                        </div>
+												<div class="form-group">
+                            <label class="control-label signin-label" for="bio" id="bio-label">Enter any public biographical information you feel is relevant below:</label>
+                            <textarea class="form-control" name="bio" placeholder="98 year old cattle herder and all-around good guy" id="bio"></textarea>
+                        </div>
+												<input class="btn btn-success btn-lg" role="button" id="signin-button" type="submit" value="JOIN FOR FREE"/><span id="join-phrase"> or, <a href="signin.html">sign in</a> if your're already a member!</span></form>
                 </div>
             </div>
         </div>
