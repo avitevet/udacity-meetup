@@ -74,7 +74,7 @@ AuthenticationForm.prototype.saveAuthentication = function() {
 };
 
 AuthenticationForm.prototype.reqLength = function(pw) {
-	return pw.length > 14;
+	return pw.length > 7;
 };
 
 AuthenticationForm.prototype.reqLcChars = function(pw) {
