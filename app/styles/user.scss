@@ -242,4 +242,9 @@ section.testimonials{
 	input:required:valid, input:focus:valid {
 		border-left: 5px solid #28b62c;
 	}
+
+	.validationMsg {
+		color: white;
+		height: 1em;
+	}
 }

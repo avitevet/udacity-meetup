@@ -1,3 +1,5 @@
+/* global ValidatedForm */
+
 /**
  * Creates an authentication form that, on submit, saves the login/signin information
  * for later use, and then redirects the user to the next page in the flow
@@ -7,6 +9,9 @@
  */
 var AuthenticationForm = function(root) {
 	var me = this;
+
+	// this is a subclass of ValidatedForm
+	ValidatedForm.call(this, root);
 
 	this.fullnameEl = root.querySelector('#fullname');
 	this.emailEl = root.querySelector('#email');
@@ -38,7 +43,12 @@ var AuthenticationForm = function(root) {
 				}
 			}
 		});
+
 		me.passwordEl.setCustomValidity(allValid ? '' : 'Please choose a password that satisfies all the criteria');
+	});
+
+	this.passwordEl.addEventListener('invalid', function(e) {
+		e.preventDefault();
 	});
 
 
@@ -48,6 +58,9 @@ var AuthenticationForm = function(root) {
 		window.location.assign('create-event.html');
 	});
 };
+
+AuthenticationForm.prototype = Object.create(ValidatedForm.prototype);
+AuthenticationForm.prototype.constructor = AuthenticationForm;
 
 /** store the login information in local storage, so it can be used by other
  * pages, then redirect to create-event.html

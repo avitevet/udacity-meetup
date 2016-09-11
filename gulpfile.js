@@ -33,7 +33,7 @@ gulp.task('styles', () => {
  * in production mode, the files should not have sourcemaps, otherwise they should.
  */
 gulp.task('scripts', () => {
-	var scriptnames = ['main.js', 'invitelist.js', 'authenticationForm.js', 'create-event.js',
+	var scriptnames = ['validatedForm.js', 'invitelist.js', 'authenticationForm.js', 'create-event.js',
 		'invite-guests.js', 'my-events.js', 'preview-send.js'];
 	var scriptfiles = [];
 	scriptnames.forEach(function(name) {

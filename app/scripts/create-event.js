@@ -1,7 +1,9 @@
-/* global moment, allValid, google */
+/* global moment, google, ValidatedForm */
 
 var CreateEventForm = function(root) {
 	var me = this;
+
+	ValidatedForm.call(this, root);
 
 	this.formEl = root.tagName === 'FORM' ? root : root.querySelector('form');
 	this.hostEl = this.formEl.querySelector('#host');
@@ -51,6 +53,9 @@ var CreateEventForm = function(root) {
 	this.initAddressAutocomplete();
 };
 
+CreateEventForm.prototype = Object.create(CreateEventForm.prototype);
+CreateEventForm.prototype.constructor = CreateEventForm;
+
 CreateEventForm.prototype.startLaterThanNow = function() {
 	var date = moment(this.startDateInputEl.value);
 	var now = moment();
@@ -72,7 +77,7 @@ CreateEventForm.prototype.startBeforeEnd = function() {
 };
 
 CreateEventForm.prototype.updateFormValid = function() {
-	this.progressbarDescribeEl.className = allValid(this.formEl) ? 'fa fa-check-circle-o progress-complete' : 'fa fa-times-circle-o progress-incomplete';
+	this.progressbarDescribeEl.className = this.allValid(this.formEl) ? 'fa fa-check-circle-o progress-complete' : 'fa fa-times-circle-o progress-incomplete';
 };
 
 CreateEventForm.prototype.initAddressAutocomplete = function() {
