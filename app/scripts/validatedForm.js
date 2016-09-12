@@ -6,9 +6,11 @@
  *     in the message field for that element
  */
 var ValidatedForm = function(root) {
-	var all, messageField;
-
 	this.rootEl = typeof(root) === 'string' ? document.querySelector(root) : root;
+};
+
+ValidatedForm.prototype.installHandlers = function() {
+	var all, messageField;
 
 	all = this.rootEl.querySelectorAll('.rtvalidation');
 	for (var i = 0; i < all.length; ++i) {
@@ -24,22 +26,9 @@ var ValidatedForm = function(root) {
 		});
 
 		// put the validation message in the message field
-		all[i].addEventListener('input', function(e) {
+		var msgInMsgField = function(e) {
 			e.srcElement.nextSibling.innerText = e.srcElement.validationMessage;
-		});
+		};
+		all[i].addEventListener('input', msgInMsgField);
 	}
-};
-
-/**
-	* Return true if all the input elements in the given form DOM object
-	* are valid, otherwise false.
-	*/
-ValidatedForm.prototype.allValid = function(formElement) {
-	var valid = true;
-
-	formElement.querySelectorAll('input').forEach(function(item) {
-		valid &= item.checkValidity();
-	});
-
-	return valid;
 };
