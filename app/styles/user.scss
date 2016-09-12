@@ -31,6 +31,10 @@
 	position: relative;
   border:none;
 
+	.validationMsg {
+		color: white;
+	}
+
 	/* from https://scotch.io/tutorials/how-to-change-a-css-background-images-opacity
 	* this gives a way to modify the background image with gradients (for darkening), or
 	* translucency.
@@ -73,45 +77,6 @@
 	}
 
 
-}
-
-div.iphone-mockup{
-  position:relative;
-  max-width:250px;
-  margin:20px;
-  display:inline-block;
-}
-
-.iphone-mockup img.device{
-  width:100%;
-  height:auto;
-}
-
-.iphone-mockup .screen{
-  position:absolute;
-  width:88%;
-  height:77%;
-  top:12%;
-  border-radius:2px;
-  left:6%;
-  border:1px solid #444;
-  background-color:#aaa;
-  overflow:hidden;
-  background:url(../../images/screen-content-iphone-6.jpg);
-  background-size:cover;
-  background-position:center;
-}
-
-.iphone-mockup .screen:before{
-  content:'';
-  background-color:#fff;
-  position:absolute;
-  width:70%;
-  height:140%;
-  top:-12%;
-  right:-60%;
-  transform:rotate(-19deg);
-  opacity:0.2;
 }
 
 .icon-feature{
@@ -244,7 +209,6 @@ section.testimonials{
 	}
 
 	.validationMsg {
-		color: white;
 		height: 1em;
 	}
 }
