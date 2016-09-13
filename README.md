@@ -62,6 +62,6 @@ Please follow the (hopefully) clear workflow to create an event.
 The application supports bulk email import, which allows users to (for example)
 copy and paste a cc list from an email.
 
-## License
+# License
 
 This project is provided under the [MIT License](http://choosealicense.com/licenses/mit/)
